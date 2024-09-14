@@ -1,0 +1,587 @@
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: white;
+}
+
+.recorder-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 2rem 1rem;
+    position: relative;
+    /* Add this line */
+}
+
+.centered-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    position: absolute;
+    /* Add this line */
+    top: 50%;
+    /* Add this line */
+    left: 50%;
+    /* Add this line */
+    transform: translate(-50%, -50%);
+    /* Add this line */
+    /* Adjust this value as needed */
+}
+
+.app-title {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.main-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#cameraRecordButton,
+#screenRecordButton,
+#combinedRecordButton {
+    flex: 0 1 auto;
+    min-width: 150px;
+    max-width: 200px;
+    min-height: 44px;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.recorder-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#preview {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    max-height: 50vh;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#timer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+    text-align: center;
+    min-width: 80px;
+    background-color: #f0f0f0;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    /* Center the buttons */
+    align-items: center;
+    /* Center vertically */
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+#recordingsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f0f0f0;
+}
+
+.recording-item {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    flex: 0 1 calc(33.333% - 1rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recording-item video {
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
+button,
+.download-button,
+.delete-button {
+    min-height: 44px;
+    min-width: 44px;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    cursor: pointer;
+}
+
+#recordButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+#recordButton:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.download-button,
+.delete-button {
+    flex: 1;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.recording-controls {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Add these new rules */
+.recording-controls a,
+.recording-controls button {
+    flex: 1;
+}
+
+#recordingWarning {
+    background-color: #ffcccc;
+    color: #cc0000;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Add media queries for different screen sizes */
+@media (max-width: 768px) {
+    .recorder-section {
+        padding: 1rem 0.5rem;
+    }
+
+    .app-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    #preview {
+        max-height: 40vh;
+        margin-bottom: 1rem;
+    }
+
+    #timer {
+        font-size: 1.2rem;
+        margin: 0.5rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    button,
+    .download-button,
+    .delete-button {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+}
+
+#successMessage {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+    border-radius: 4px;
+    opacity: 0;
+    transform: translateY(20px);
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+#successMessage.show {
+    animation: popUp 0.5s forwards, stay 1s 0.5s forwards, popDown 0.5s 1.5s forwards;
+}
+
+@keyframes popUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) translateX(-50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+}
+
+@keyframes stay {
+    from {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+}
+
+@keyframes popDown {
+    from {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(20px) translateX(-50%);
+    }
+}
+
+#successMessage.hide {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#saveButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+#newButton {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.recording-details {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    width: 100%;
+}
+
+.recording-details p {
+    margin: 0.2rem 0;
+}
+
+#pauseButton,
+#resumeButton {
+    background-color: #ffc107;
+    color: black;
+    border: none;
+    border-radius: 4px;
+}
+
+.filter-controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.filter-controls button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-controls button:hover {
+    background-color: #5a6268;
+}
+
+.filter-controls button.active {
+    background-color: #007bff;
+}
+
+#screenRecordButton {
+    background-color: #9c27b0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+#cameraContainer {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 160px;
+    height: 120px;
+    z-index: 1000;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+#cameraFeed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#recordingMode {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 0.5rem;
+}
+
+#cameraRecordButton,
+#screenRecordButton,
+#combinedRecordButton {
+    flex: 0 1 auto;
+    min-width: 150px;
+    max-width: 200px;
+    min-height: 44px;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    text-align: center;
+    line-height: 1.2;
+}
+
+#cameraRecordButton {
+    background-color: #2196F3;
+    /* Changed from green to blue */
+}
+
+#screenRecordButton {
+    background-color: #9c27b0;
+}
+
+#combinedRecordButton {
+    background-color: #FF9800;
+    /* Changed from red to orange */
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+#combinedRecordButton:hover {
+    background-color: #FB8C00;
+    /* Adjusted hover color */
+}
+
+#combinedRecordButton:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+/* Add transition effects to buttons */
+button,
+.download-button,
+.delete-button,
+#cameraRecordButton,
+#screenRecordButton,
+#combinedRecordButton,
+#pauseButton,
+#resumeButton,
+#stopButton,
+#saveButton,
+#newButton {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Add hover and active states for buttons */
+button:hover,
+.download-button:hover,
+.delete-button:hover,
+#cameraRecordButton:hover,
+#screenRecordButton:hover,
+#combinedRecordButton:hover,
+#pauseButton:hover,
+#resumeButton:hover,
+#stopButton:hover,
+#saveButton:hover,
+#newButton:hover {
+    background-color: darken(#4CAF50, 10%);
+    /* Adjust color as needed */
+    transform: scale(1.05);
+}
+
+button:active,
+.download-button:active,
+.delete-button:active,
+#cameraRecordButton:active,
+#screenRecordButton:active,
+#combinedRecordButton:active,
+#pauseButton:active,
+#resumeButton:active,
+#stopButton:active,
+#saveButton:active,
+#newButton:active {
+    transform: scale(0.95);
+}
+
+/* Specific button color adjustments */
+#cameraRecordButton:hover {
+    background-color: #1976D2;
+    /* Adjusted hover color */
+}
+
+#screenRecordButton:hover {
+    background-color: #8e24aa;
+}
+
+#combinedRecordButton:hover {
+    background-color: #e64a19;
+}
+
+#pauseButton:hover,
+#resumeButton:hover {
+    background-color: #e0a800;
+}
+
+#stopButton:hover {
+    background-color: #d32f2f;
+}
+
+#saveButton:hover {
+    background-color: #0056b3;
+}
+
+#newButton:hover {
+    background-color: #5a6268;
+}
+
+/* ... existing code ... */
+
+.recording-type {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* ... existing code ... */
+
+#clearDataButton {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    position: absolute;
+    /* Changed from fixed to absolute */
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#clearDataButton:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+#clearDataButton:active {
+    transform: scale(0.95);
+}
