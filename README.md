@@ -4,7 +4,7 @@ This is a web application that allows users to record video and audio using thei
 
 ## Live Demo
 
-You can try out the live version of this app at: [recorderyuva03.ccbp.tech](https://recorderyuva03.ccbp.tech)
+You can try out the live version of this app at: [recorder-app-yuvateja](https://recorder-app-black.vercel.app/)
 
 ## Features
 
